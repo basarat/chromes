@@ -570,8 +570,30 @@ export class ElementHandle {
 
 }
 
+/**
+ * Keyboard provides an api for managing a virtual keyboard. 
+ * 
+ * The high level api is `page.type`, which takes raw characters and generates proper keydown, keypress/input, and keyup events on your page.
+ * 
+ * For finer control, you can use `keyboard.down`, `keyboard.up`, and `keyboard.sendCharacter` to manually fire events as if they were generated from a real keyboard.
+ */
 export class Keyboard {
+  /**
+   * Dispatches a `keydown` event.
+   * 
+   * If `key` is a modifier key, `Shift`, `Meta`, `Control`, or `Alt`, subsequent key presses will be sent with that modifier active. To release the modifier key, use `up`.
+   * 
+   * After the key is pressed once, subsequent calls to `down` will have [repeat](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/repeat) set to true. To release the key, use `up`.
+   */
+  down(
+    /** Name of key to press, such as `ArrowLeft`.See[KeyboardEvent.key](https://www.w3.org/TR/uievents-key/) */
+    key: string,
+    options?: {
+      /** If specified, generates an input event with this text. */
+      text: string,
+    }): Promise<void>
 
+  
 }
 
 export class Mouse {

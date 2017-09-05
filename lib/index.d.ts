@@ -553,26 +553,6 @@ If there's no element matching `selector`, the method throws an error.
   ): Promise<void>
 }
 
-export class Dialog {
-
-}
-
-export class Frame {
-
-}
-
-export class Request {
-
-}
-
-export class Response {
-
-}
-
-export class ElementHandle {
-
-}
-
 /**
  * Keyboard provides an api for managing a virtual keyboard. 
  * 
@@ -670,4 +650,42 @@ export class Tracing {
   }): Promise<void>;
 
   stop(): Promise<void>;
+}
+
+/**
+ * Dialog objects are dispatched by page via the 'dialog' event.
+ * 
+ * e.g. 
+ * 
+ * ```js
+const puppeteer = require('puppeteer');
+puppeteer.launch().then(async browser => {
+  const page = await browser.newPage();
+  page.on('dialog', async dialog => {
+    console.log(dialog.message());
+    await dialog.dismiss();
+    browser.close();
+  });
+  page.evaluate(() => alert('1'));
+});
+ * ```
+ */
+export class Dialog {
+
+}
+
+export class Frame {
+
+}
+
+export class Request {
+
+}
+
+export class Response {
+
+}
+
+export class ElementHandle {
+
 }

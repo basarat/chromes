@@ -227,6 +227,16 @@ If URLs are specified, only cookies for those URLs are returned.
    */
   evaluate<T>(pageFunction: () => T, ...args: any[]): T
   evaluate(str: string, ...args: any[]): any
+
+  evaluateOnNewDocument: any;
+  exposeFunction: any;
+
+  /**
+   * A [selector] of an element to focus. 
+   * If there are multiple elements satisfying the selector, the first will be focused.
+   * If there's no element matching `selector`, the method throws an error.
+   */
+  focus(selector: string): Promise<void>;
 }
 
 export class Dialog {

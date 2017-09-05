@@ -533,6 +533,21 @@ If there's no element matching `selector`, the method throws an error.
    * @returns Promise which resolves to the main resource response. In case of multiple redirects, the navigation will resolve with the response of the last redirect.
    */
   waitForNavigation(options: NavigationOptions): Promise<Response>
+
+  /** 
+   * Wait for the `selector` to appear in page. 
+   * If at the moment of calling the method the `selector` already exists, the method will return immediately. 
+   * If the selector doesn't appear after the `timeout` milliseconds of waiting, the function will throw.
+   */
+  waitForSelector(
+    selector: string,
+    options?: {
+      /** wait for element to be present in DOM and to be visible, i.e. to not have `display: none` or `visibility: hidden` CSS properties. Defaults to `false`. */
+      visible?: boolean
+      /** maximum time to wait for in milliseconds. Defaults to `30000` (30 seconds). */
+      timeout?: number
+    }
+  ): Promise<void>
 }
 
 export class Dialog {

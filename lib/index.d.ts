@@ -83,6 +83,21 @@ export type NavigationOptions = {
   networkIdleTimeout?: number
 }
 
+export type ViewportOptions = {
+  /** page width in pixels */
+  width?: number
+  /** page height in pixels */
+  height?: number
+  /** Specify device scale factor (could be thought of as dpr). Defaults to `1`. */
+  deviceScaleFactor?: number
+  /** Whether the `meta viewport` tag is taken into account. Defaults to `false`. */
+  isMobile?: boolean,
+  /** Specifies if viewport supports touch events. Defaults to `false` */
+  hasTouch?: boolean,
+  /** Specifies if viewport is in landscape mode. Defaults to `false`. */
+  isLandscape?: boolean,
+}
+
 /** 
  * Page provides methods to interact with a single tab in Chromium.
  * One `Browser` instance might have multiple `Page` instances.
@@ -216,18 +231,7 @@ If URLs are specified, only cookies for those URLs are returned.
    * - setUserAgent
    **/
   emulate(options: {
-    viewport?: {
-      /** page width in pixels */
-      width?: number
-      /** page height in pixels */
-      height?: number
-      /** Specify device scale factor (could be thought of as dpr). Defaults to `1`. */
-      deviceScaleFactor?: number
-
-      isMobile?: boolean,
-      hasTouch?: boolean,
-      isLandscape?: boolean,
-    },
+    viewport?: ViewportOptions,
     userAgent?: string
   }): Promise<void>
 
@@ -442,6 +446,41 @@ If there's no element matching `selector`, the method throws an error.
   /** The extra HTTP headers will be sent with every request the page initiates. */
   setExtraHTTPHeaders(headers: any): Promise<void>
 
+  /**
+   * Whether or not to enable JavaScript on the page.
+   * 
+   * **NOTE** changing this value won't affect scripts that have already been run. It will take full effect on the next [navigation](#pagegotourl-options).
+   */
+  setJavaScriptEnabled(enabled: boolean): Promise<void>
+
+  /** 
+   * Activating request interception enables `request.abort` and `request.continue`.
+   */
+  setRequestInterceptionEnabled(value: boolean): Promise<void>
+
+  /** Sets a specific user agent to use in this page */
+  setUserAgent(userAgent: string): Promise<void>
+
+  /**
+   * - in certain cases, setting viewport will reload the page in order to set the `isMobile` or `hasTouch` properties.
+   * - in the case of multiple pages in a single browser, each page can have its own viewport size.
+   */
+  setViewport(viewport: ViewportOptions): Promise<void>
+
+  /** 
+   * This method fetches an element with `selector`, scrolls it into view if needed, and then uses `touchscreen` to tap in the center of the element.
+   * 
+   * If there's no element matching `selector`, the method throws an error.
+   * 
+   * @param selector A selector to search for element to tap. If there are multiple elements satisfying the selector, the first will be tapped.
+   */
+  tap(selector: string): Promise<void>
+
+  /** 
+   * Returns page's title.
+   * Shortcut for [page.mainFrame().title()](#frametitle).
+   */
+  title(): Promise<string>,
 }
 
 export class Dialog {

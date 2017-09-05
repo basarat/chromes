@@ -138,6 +138,83 @@ export class Page {
    * The method runs `document.querySelectorAll` within the page. If no elements match the selector, the return value resolve to `[]`.
    */
   $$(selector: string): Promise<ElementHandle[]>
+
+  /**
+   * This method runs `document.querySelector` within the page and passes it as the first argument to `pageFunction`. 
+   * If there's no element matching `selector`, the method throws an error
+   */
+  $eval<T>(selector: string, pageFunction: (e: Node) => T, ...args: any[]): Promise<T>
+
+  /**
+   * Adds a `<script>` tag into the page with the desired url. 
+   * @returns resolves when the scripts `onload` fires.
+   * Alternatively, a local JavaScript file could be injected via [`page.injectFile`](#pageinjectfilefilepath) method.
+   */
+  addScriptTag(url: string): Promise<void>
+
+  /**
+   * This method fetches an element with `selector`, 
+   * scrolls it into view if needed, 
+   * and then uses [page.mouse](#pagemouse) to click in the center of the element.
+   * If there's no element matching `selector`, the method throws an error.
+   */
+  click(selector: string, options?: {
+    button?: 'left' | 'right' | 'middle',
+    clickCount?: number,
+    /** Time to wait between `mousedown` and `mouseup` in milliseconds. Defaults to 0. */
+    delay?: number,
+  }): Promise<void>
+
+  close(): Promise<void>
+
+  /** Gets the full HTML contents of the page, including the doctype. */
+  content(): Promise<string>
+
+  /**
+   * 
+   * @param urls If no URLs are specified, this method returns cookies for the current page URL.
+If URLs are specified, only cookies for those URLs are returned.
+   */
+  cookies(...urls: string[]): Promise<{
+    name: string,
+    value: string,
+    domain: string,
+    path: string,
+    expires: number,
+    httpOnly: boolean,
+    secure: boolean,
+    sameSite: 'Strict' | 'Lax'
+  }[]>
+
+  deleteCookie(...cookies: {
+    name: string,
+    url?: string,
+    domain?: string,
+    path?: string,
+    secure?: boolean,
+  }[]): Promise<void>
+
+  /** 
+   * Emulates given device metrics and user agent. 
+   * This method is a shortcut for calling two methods: 
+   * - setViewport
+   * - setUserAgent
+   **/
+  emulate(options: {
+    viewport?: {
+      /** page width in pixels */
+      width?: number
+      /** page height in pixels */
+      height?: number
+      /** Specify device scale factor (could be thought of as dpr). Defaults to `1`. */
+      deviceScaleFactor?: number
+
+      isMobile?: boolean,
+      hasTouch?: boolean,
+      isLandscape?: boolean,
+    },
+    userAgent?: string
+  }): Promise<void>
 }
 
 export class Dialog {

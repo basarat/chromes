@@ -671,7 +671,29 @@ puppeteer.launch().then(async browser => {
  * ```
  */
 export class Dialog {
+  type: 'alert' | 'beforeunload' | 'confirm' | 'prompt'
 
+  /**
+   * A text to enter in prompt. 
+   * Does not cause any effects if the dialog's `type` is not prompt.
+   */
+  accept(promptText?: string): Promise<void>
+
+  /** 
+   * If dialog is prompt, returns default prompt value. 
+   * Otherwise, returns empty string.
+   */
+  defaultValue(): string
+
+  /**
+   * Dismisses the dialog
+   */
+  dismiss(): Promise<void>
+
+  /**
+   * A message displayed in the dialog.
+   */
+  message(): string
 }
 
 export class Frame {

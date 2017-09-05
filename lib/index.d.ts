@@ -498,11 +498,36 @@ If there's no element matching `selector`, the method throws an error.
 
   viewport(): ViewportOptions
 
-  waitFor(selector: string, options?: any): Promise<void>
-  waitFor(func: () => boolean, options?: any): Promise<void>
-  waitFor(timeoutMS: number, options?: any): Promise<void>
+  /** 
+   * Prefer specific waitFor functions 
+   *  - waitForFunction 
+   *  - waitForSelector
+   *  - waitForTimeout
+   **/
+  waitFor: any
 
-  
+  /**
+   * @param pageFunction Function to be evaluated in browser context
+   */
+  waitForFunction(
+    pageFunction: (...args: any[]) => boolean | string,
+    options?: {
+      /**
+       * An interval at which the `pageFunction` is executed, defaults to `raf`. If `polling` is a number, then it is treated as an interval in milliseconds at which the function would be executed.
+       */
+      polling?:
+      /** to constantly execute `pageFunction` in `requestAnimationFrame` callback. This is the tightest polling mode which is suitable to observe styling changes. */
+      | 'raf'
+      /** to execute `pageFunction` on every DOM mutation. */
+      | 'mutation'
+      | number
+
+      /** maximum time to wait for in milliseconds. Defaults to `30000` (30 seconds). */
+      timeout?: number
+    },
+    /** Arguments to pass to  `pageFunction` */
+    ...args: any[]
+  ): Promise<void>
 }
 
 export class Dialog {

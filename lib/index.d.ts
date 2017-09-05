@@ -480,7 +480,7 @@ If there's no element matching `selector`, the method throws an error.
    * Returns page's title.
    * Shortcut for [page.mainFrame().title()](#frametitle).
    */
-  title(): Promise<string>,
+  title(): Promise<string>
 }
 
 export class Dialog {

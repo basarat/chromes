@@ -483,6 +483,8 @@ If there's no element matching `selector`, the method throws an error.
   title(): Promise<string>
 
   touchscreen: Touchscreen
+
+  tracing: Tracing
 }
 
 export class Dialog {
@@ -516,4 +518,19 @@ export class Mouse {
 export class Touchscreen {
   /** Dispatches a touchstart and touchend event. */
   tap(x: number, y: number): Promise<void>
+}
+
+/**
+ * You can use tracing.start and tracing.stop to create a trace file which can be opened in Chrome DevTools or timeline viewer.
+ */
+export class Tracing {
+  /** Only one trace can be active at a time per browser. */
+  start(options: {
+    /** A path to write the trace file to  */
+    path: string
+    /** captures screenshots in the trace. */
+    screenshots?: boolean
+  }): Promise<void>;
+
+  stop(): Promise<void>;
 }

@@ -624,6 +624,32 @@ export class Mouse {
    * Shortcut for `move`, `down` and `up`
    */
   click(x: number, y: number, options?: ClickOptions): Promise<void>
+
+  /**
+   * Dispatches a `mousedown` event.
+   */
+  down(options?: {
+    button?: /** default */ 'left' | 'right' | 'middle'
+    /** defaults to 1 */
+    clickCount?: number
+  }): Promise<void>
+
+  /**
+   * Dispatches a `mousemove` event.
+   */
+  move(x: number, y: number, options?: {
+    /** defaults to 1. Sends intermediate `mousemove` events. */
+    steps: number
+  }): Promise<void>
+
+  /** 
+   * Dispatches a `mouseup` event.
+   */
+  up(options?: {
+    button?: /** default */ 'left' | 'right' | 'middle'
+    /** defaults to 1 */
+    clickCount?: number
+  }): Promise<void>
 }
 
 export class Touchscreen {

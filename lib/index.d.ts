@@ -98,6 +98,14 @@ export type ViewportOptions = {
   isLandscape?: boolean,
 }
 
+export type ClickOptions = {
+  button?: /** default */'left' | 'right' | 'middle',
+  /** defaults to 1 */
+  clickCount?: number,
+  /** Time to wait between `mousedown` and `mouseup` in milliseconds. Defaults to 0. */
+  delay?: number,
+}
+
 /** 
  * Page provides methods to interact with a single tab in Chromium.
  * One `Browser` instance might have multiple `Page` instances.
@@ -188,12 +196,7 @@ export class Page {
    * and then uses [page.mouse](#pagemouse) to click in the center of the element.
    * If there's no element matching `selector`, the method throws an error.
    */
-  click(selector: string, options?: {
-    button?: 'left' | 'right' | 'middle',
-    clickCount?: number,
-    /** Time to wait between `mousedown` and `mouseup` in milliseconds. Defaults to 0. */
-    delay?: number,
-  }): Promise<void>
+  click(selector: string, options?: ClickOptions): Promise<void>
 
   close(): Promise<void>
 
@@ -617,7 +620,10 @@ export class Keyboard {
 }
 
 export class Mouse {
-
+  /**
+   * Shortcut for `move`, `down` and `up`
+   */
+  click(x: number, y: number, options?: ClickOptions): Promise<void>
 }
 
 export class Touchscreen {

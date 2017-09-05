@@ -2,7 +2,7 @@
 A simple and typesafe chrome automation library 🌹
 
 ```js
-npm install chromes -D
+npm install chromes -S
 ```
 
 ```js

@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/basarat/chromes/issues"
   },
-  "homepage": "https://github.com/basarat/chromes#readme"
+  "homepage": "https://github.com/basarat/chromes#readme",
+  "dependencies": {
+    "puppeteer": "0.10.2"
+  }
 }

@@ -605,6 +605,15 @@ export class Keyboard {
    * ```
    */
   sendCharacter(char: string): Promise<void>
+
+  /** 
+   * Dispatches a `keyup` event.
+   * 
+   * @param key Name of key to release, such as `ArrowLeft`. See [KeyboardEvent.key](https://www.w3.org/TR/uievents-key/)
+   */
+  up(
+    key: string
+  ): Promise<void>
 }
 
 export class Mouse {

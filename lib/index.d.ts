@@ -497,6 +497,12 @@ If there's no element matching `selector`, the method throws an error.
   url(): string
 
   viewport(): ViewportOptions
+
+  waitFor(selector: string, options?: any): Promise<void>
+  waitFor(func: () => boolean, options?: any): Promise<void>
+  waitFor(timeoutMS: number, options?: any): Promise<void>
+
+  
 }
 
 export class Dialog {

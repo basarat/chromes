@@ -481,6 +481,8 @@ If there's no element matching `selector`, the method throws an error.
    * Shortcut for [page.mainFrame().title()](#frametitle).
    */
   title(): Promise<string>
+
+  touchscreen: Touchscreen
 }
 
 export class Dialog {
@@ -509,4 +511,9 @@ export class Keyboard {
 
 export class Mouse {
 
+}
+
+export class Touchscreen {
+  /** Dispatches a touchstart and touchend event. */
+  tap(x: number, y: number): Promise<void>
 }

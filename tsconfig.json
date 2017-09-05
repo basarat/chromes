@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "noImplicitAny": true,
+    "noUnusedLocals": true,
     "strictNullChecks": true,
     "target": "es6"
   },

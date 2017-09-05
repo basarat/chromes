@@ -718,17 +718,59 @@ const page = await browser.newPage();
 ```
  */
 export class Frame {
-
+  /** TODO  */
 }
 
 export class Request {
-
-}
-
-export class Response {
-
+  /** TODO */
 }
 
 export class ElementHandle {
+  /** TODO */
+}
 
+/**
+ * Response class represents responses which are received by page.
+ */
+export class Response {
+  /** 
+   * resolves to a buffer with response body.
+   */
+  buffer(): Promise<Buffer>
+
+  /**
+   * An object with HTTP headers associated with the response. All header names are lower-case.
+   */
+  headers: any
+
+  /** 
+   * Promise which resolves to a JSON representation of response body.
+   * This method will throw if the response body is not parsable via `JSON.parse`.
+   */
+  json(): Promise<any>
+
+  /**
+   * Contains a boolean stating whether the response was successful (status in the range 200-299) or not.
+   */
+  ok: boolean
+
+  /** 
+   * @returns A matching Request object.
+   */
+  request(): Request
+
+  /**
+   * Contains the status code of the response (e.g., 200 for a success).
+   */
+  status: number
+
+  /**
+   * @returns Promise which resolves to a text representation of response body.
+   */
+  text(): Promise<string>
+
+  /** 
+   * Contains the URL of the response.
+   */
+  url: string
 }

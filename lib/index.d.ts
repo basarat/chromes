@@ -696,6 +696,27 @@ export class Dialog {
   message(): string
 }
 
+/**
+ * At every point of time, page exposes its current frame tree via 
+ * the `page.mainFrame()` and `frame.childFrames()` methods
+ * 
+ * Frame object's lifecycle is controlled by three events, dispatched on the page object.
+ * frameattached | framenavigated | framedetached
+ * 
+ * Example frametree dumping: 
+```js
+const page = await browser.newPage();
+  await page.goto('https://www.google.com/chrome/browser/canary.html');
+  dumpFrameTree(page.mainFrame(), '');
+  browser.close();
+
+  function dumpFrameTree(frame, indent) {
+    console.log(indent + frame.url());
+    for (let child of frame.childFrames())
+      dumpFrameTree(child, indent + '  ');
+  }
+```
+ */
 export class Frame {
 
 }

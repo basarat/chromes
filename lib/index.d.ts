@@ -68,6 +68,21 @@ export class Browser {
   wsEndpoint(): string
 }
 
+export type NavigationOptions = {
+  /** Maximum navigation time in milliseconds, defaults to 30 seconds. */
+  timeout?: number
+  /** When to consider a navigation finished, defaults to `load`. */
+  waitUntil?:
+  /** consider navigation to be finished when the `load` event is fired. */
+  | 'load'
+  /** consider navigation to be finished when the network activity stays "idle" for at least `networkIdleTimeout` ms. */
+  | 'networkidle'
+  /** Maximum amount of inflight requests which are considered "idle". Takes effect only with `waitUntil: 'networkidle'` parameter. */
+  networkIdleInflight?: number
+  /** A timeout to wait before completing navigation. Takes effect only with `waitUntil: 'networkidle'` parameter. */
+  networkIdleTimeout?: number
+}
+
 /** 
  * Page provides methods to interact with a single tab in Chromium.
  * One `Browser` instance might have multiple `Page` instances.
@@ -228,8 +243,13 @@ If URLs are specified, only cookies for those URLs are returned.
   evaluate<T>(pageFunction: () => T, ...args: any[]): T
   evaluate(str: string, ...args: any[]): any
 
-  evaluateOnNewDocument: any;
-  exposeFunction: any;
+  evaluateOnNewDocument(pageFunction: () => any, ...args: any[]): Promise<void>;
+
+  /**
+   * The method adds a function called `name` on the page's `window` object.
+   * When called, the function executes `puppeteerFunction` in node.js and returns a [Promise] which resolves to the return value of `puppeteerFunction`.
+   */
+  exposeFunction(name: string, puppeteerFunction: () => any): Promise<void>;
 
   /**
    * A [selector] of an element to focus. 
@@ -237,6 +257,64 @@ If URLs are specified, only cookies for those URLs are returned.
    * If there's no element matching `selector`, the method throws an error.
    */
   focus(selector: string): Promise<void>;
+
+  /** An array of all frames attached to the page */
+  frames(): Frame[];
+
+  /**
+   * Navigate to the previous page in history.
+   * 
+   * @returns Promise which resolves to the main resource response. In case of multiple redirects, the navigation will resolve with the response of the last redirect. If
+can not go back, resolves to null.
+   */
+  goBack(options?: NavigationOptions): Promise<Response | null>;
+  /**
+   * Navigate to the next page in history.
+   * 
+   * @returns Promise which resolves to the main resource response. In case of multiple redirects, the navigation will resolve with the response of the last redirect. If
+can not go forward, resolves to null.
+   */
+  goForward(options?: NavigationOptions): Promise<Response | null>;
+
+  /**
+   * `goto` will throw an error if:
+   * - there's an SSL error (e.g. in case of self-signed certificates).
+   * - target URL is invalid.
+   * - the `timeout` is exceeded during navigation.
+   * - the main resource failed to load.
+   * 
+   * @returns Promise which resolves to the main resource response. In case of multiple redirects, the navigation will resolve with the response of the last redirect.
+   */
+  goto(url: string, options?: NavigationOptions): Promise<Response>
+
+  /** 
+   * This method fetches an element with `selector`, scrolls it into view if needed, and then uses [page.mouse](#pagemouse) to hover over the center of the element.
+If there's no element matching `selector`, the method throws an error.
+   * @param selector to search for element to hover. If there are multiple elements satisfying the selector, the first will be hovered.
+   * @returns Promise which resolves when the element matching `selector` is successfully hovered. Promise gets rejected if there's no element matching `selector`.
+   */
+  hover(selector: string): Promise<void>
+
+  /**
+   * @param filePath Path to the JavaScript file to be injected into frame. If `filePath` is a relative path, then it is resolved relative to [current working directory](https://nodejs.org/api/process.html#process_process_cwd)
+   * @returns Promise which resolves when file gets successfully evaluated in frame.
+   */
+  injectFile(filePath: string): Promise<void>
+
+  keyboard: Keyboard
+
+  /** Page is guaranteed to have a main frame which persists during navigations. */
+  mainFrame(): Frame
+
+  mouse: Mouse
+
+  /**
+   * **NOTE** Generating a pdf is currently only supported in Chrome headless.
+   * 
+   * `page.pdf()` generates a pdf of the page with `print` css media. To generate a pdf with `screen` media, call [page.emulateMedia('screen')](#pageemulatemediamediatype) before calling `page.pdf()`
+   * 
+   */
+  pdf():Promise<Buffer>
 }
 
 export class Dialog {
@@ -256,5 +334,13 @@ export class Response {
 }
 
 export class ElementHandle {
+
+}
+
+export class Keyboard {
+
+}
+
+export class Mouse {
 
 }

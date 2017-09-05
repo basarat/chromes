@@ -396,6 +396,33 @@ If there's no element matching `selector`, the method throws an error.
    * @returns Promise which resolves to the main resource response. In case of multiple redirects, the navigation will resolve with the response of the last redirect.
    */
   reload(options?: NavigationOptions): Promise<Response>
+
+  /** 
+   * @returns Promise which resolves to buffer with captured screenshot
+   */
+  screenshot(options?: {
+    /** The file path to save the image to. The screenshot type will be inferred from file extension. If `path` is a relative path, then it is resolved relative to [current working directory](https://nodejs.org/api/process.html#process_process_cwd). If no path is provided, the image won't be saved to the disk. */
+    path?: string,
+    /** Specify screenshot type, could be either `jpeg` or `png`. Defaults to 'png'. */
+    type?: 'png' | 'jpeg',
+    /**  The quality of the image, between 0 - 100. Not applicable to `png` images. */
+    quality?: number,
+    /** When true, takes a screenshot of the full scrollable page. Defaults to `false` */
+    fullPage?: boolean,
+    /** An object which specifies clipping region of the page. */
+    clip?: {
+      /** x-coordinate of top-left corner of clip area */
+      x?: number
+      /** y-coordinate of top-left corner of clip area */
+      y?: number
+      /** width of clipping area */
+      width?: number
+      /** height of clipping area} */
+      height?: number
+    },
+    /** Hides default white background and allows capturing screenshots with transparency. Defaults to `false`. */
+    omitBackground: boolean
+  }): Promise<Buffer>
 }
 
 export class Dialog {

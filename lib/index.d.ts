@@ -528,6 +528,11 @@ If there's no element matching `selector`, the method throws an error.
     /** Arguments to pass to  `pageFunction` */
     ...args: any[]
   ): Promise<void>
+
+  /**
+   * @returns Promise which resolves to the main resource response. In case of multiple redirects, the navigation will resolve with the response of the last redirect.
+   */
+  waitForNavigation(options: NavigationOptions): Promise<Response>
 }
 
 export class Dialog {

@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "target": "es6"
+  },
+  "include": [
+    "lib"
+  ]
+}

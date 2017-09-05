@@ -314,7 +314,64 @@ If there's no element matching `selector`, the method throws an error.
    * `page.pdf()` generates a pdf of the page with `print` css media. To generate a pdf with `screen` media, call [page.emulateMedia('screen')](#pageemulatemediamediatype) before calling `page.pdf()`
    * 
    */
-  pdf():Promise<Buffer>
+  pdf(options?: {
+    /** The file path to save the PDF to. If `path` is a relative path, then it is resolved relative to [current working directory](https://nodejs.org/api/process.html#process_process_cwd). If no path is provided, the PDF won't be saved to the disk. */
+    path?: string,
+    /**  Scale of the webpage rendering. Defaults to `1`. */
+    scale?: number,
+    /**  Display header and footer. Defaults to `false`. */
+    displayHeaderFooter?: boolean,
+    /** 
+     * Print background graphics. Defaults to `false`.
+     **/
+    printBackground?: boolean,
+    /** 
+     * Paper orientation. Defaults to `false`. 
+     **/
+    landscape?: boolean,
+    /** 
+     * Paper ranges to print, e.g., '1-5, 8, 11-13'. Defaults to the empty string, which means print all pages. 
+     **/
+    pageRanges?: string,
+    /** 
+     * Paper format.
+     * If set, takes priority over`width` or`height` options.
+     * Defaults to 'Letter'. */
+    format?:
+    | 'Letter'
+    | 'Legal'
+    | 'Tabloid'
+    | 'Ledger'
+    | 'A0'
+    | 'A1'
+    | 'A2'
+    | 'A3'
+    | 'A4'
+    | 'A5'
+    /** Paper width, accepts values labeled with units. */
+    width?: string,
+    /** Paper height, accepts values labeled with units. */
+    height?: string,
+    /** 
+     * Paper margins, defaults to none.
+     * For each sub prop example values: 
+     *  100 
+     *  '100px'
+     *  '100in'
+     *  '100cm'
+     *  '100mm'
+     */
+    margin?: {
+      /** Top margin, accepts values labeled with units. */
+      top?: number | string,
+      /** Right margin, accepts values labeled with units. */
+      right?: number | string,
+      /** Bottom margin, accepts values labeled with units. */
+      bottom?: number | string,
+      /** Left margin, accepts values labeled with units. */
+      left?: number | string,
+    }
+  }): Promise<Buffer>
 }
 
 export class Dialog {

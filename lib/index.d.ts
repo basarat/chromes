@@ -485,6 +485,18 @@ If there's no element matching `selector`, the method throws an error.
   touchscreen: Touchscreen
 
   tracing: Tracing
+
+  /** 
+   * Sends a `keydown`, `keypress`/`input`, and `keyup` event for each character in the text into the focused element.
+   * To press a special key, use `press`
+   */
+  type(text: string, options?: {
+    delay: number
+  }): Promise<void>
+
+  url(): string
+
+  viewport(): ViewportOptions
 }
 
 export class Dialog {

@@ -372,6 +372,27 @@ If there's no element matching `selector`, the method throws an error.
       left?: number | string,
     }
   }): Promise<Buffer>
+
+  /** 
+   * Returns page's inner text.
+   */
+  plainText(): Promise<string>
+
+  /**
+   * Shortcut for `keyboard.down` and `keyboard.up`
+   * @param key Name of key to press, such as `ArrowLeft`. See [KeyboardEvent.key](https://www.w3.org/TR/uievents-key/)
+   */
+  press(
+    key: string,
+    options?: {
+      /** If specified, generates an input event with this text. */
+      text?: string,
+      /** Time to wait between `keydown` and `keyup` in milliseconds. Defaults to 0. */
+      delay?: number
+    }
+  ): Promise<void>
+
+
 }
 
 export class Dialog {

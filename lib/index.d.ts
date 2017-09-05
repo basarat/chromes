@@ -593,7 +593,18 @@ export class Keyboard {
       text: string,
     }): Promise<void>
 
-  
+  /**
+   * Dispatches a `keypress` and `input` event.
+   * This does not send a `keydown` or `keyup` event.
+   * 
+   * @param char Character to send into the page
+   * 
+   * e.g 
+   * ```
+   * page.keyboard.sendCharacter('嗨');
+   * ```
+   */
+  sendCharacter(char: string): Promise<void>
 }
 
 export class Mouse {

@@ -423,6 +423,25 @@ If there's no element matching `selector`, the method throws an error.
     /** Hides default white background and allows capturing screenshots with transparency. Defaults to `false`. */
     omitBackground: boolean
   }): Promise<Buffer>
+
+  setContent(html: string): Promise<void>
+
+  setCookie(cookies: {
+    name: string,
+    value: string,
+    url?: string,
+    domain?: string,
+    path?: string
+    /** Unix time in seconds. */
+    expires?: number
+    httpOnly?: boolean
+    secure?: boolean
+    sameSite?: "Strict" | "Lax"
+  }[]): Promise<void>
+
+  /** The extra HTTP headers will be sent with every request the page initiates. */
+  setExtraHTTPHeaders(headers: any): Promise<void>
+
 }
 
 export class Dialog {

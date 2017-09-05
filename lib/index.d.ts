@@ -392,7 +392,10 @@ If there's no element matching `selector`, the method throws an error.
     }
   ): Promise<void>
 
-
+  /** 
+   * @returns Promise which resolves to the main resource response. In case of multiple redirects, the navigation will resolve with the response of the last redirect.
+   */
+  reload(options?: NavigationOptions): Promise<Response>
 }
 
 export class Dialog {

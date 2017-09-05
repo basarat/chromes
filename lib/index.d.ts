@@ -215,6 +215,18 @@ If URLs are specified, only cookies for those URLs are returned.
     },
     userAgent?: string
   }): Promise<void>
+
+  /** 
+   * Changes the CSS media type of the page. 
+   * Passing `null` disables media emulation.
+   */
+  emulateMedia(mediaType: 'screen' | 'print' | null): Promise<void>
+
+  /** 
+   * Function to be evaluated in the page context
+   */
+  evaluate<T>(pageFunction: () => T, ...args: any[]): T
+  evaluate(str: string, ...args: any[]): any
 }
 
 export class Dialog {

@@ -428,7 +428,7 @@ If there's no element matching `selector`, the method throws an error.
       height?: number
     },
     /** Hides default white background and allows capturing screenshots with transparency. Defaults to `false`. */
-    omitBackground: boolean
+    omitBackground?: boolean
   }): Promise<Buffer>
 
   setContent(html: string): Promise<void>

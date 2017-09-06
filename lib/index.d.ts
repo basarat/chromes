@@ -794,7 +794,50 @@ const html = await frame.$eval('.main-container', e => e.outerHTML);
    */
   url(): string
 
-  
+  /** 
+   * Prefer specific waitFor functions 
+   *  - waitForFunction 
+   *  - waitForSelector
+   **/
+  waitFor: any
+
+  /**
+   * @param pageFunction Function to be evaluated in browser context
+   */
+  waitForFunction(
+    pageFunction: (...args: any[]) => boolean | string,
+    options?: {
+      /**
+       * An interval at which the `pageFunction` is executed, defaults to `raf`. If `polling` is a number, then it is treated as an interval in milliseconds at which the function would be executed.
+       */
+      polling?:
+      /** to constantly execute `pageFunction` in `requestAnimationFrame` callback. This is the tightest polling mode which is suitable to observe styling changes. */
+      | 'raf'
+      /** to execute `pageFunction` on every DOM mutation. */
+      | 'mutation'
+      | number
+
+      /** maximum time to wait for in milliseconds. Defaults to `30000` (30 seconds). */
+      timeout?: number
+    },
+    /** Arguments to pass to  `pageFunction` */
+    ...args: any[]
+  ): Promise<void>
+
+  /** 
+   * Wait for the `selector` to appear in page. 
+   * If at the moment of calling the method the `selector` already exists, the method will return immediately. 
+   * If the selector doesn't appear after the `timeout` milliseconds of waiting, the function will throw.
+   */
+  waitForSelector(
+    selector: string,
+    options?: {
+      /** wait for element to be present in DOM and to be visible, i.e. to not have `display: none` or `visibility: hidden` CSS properties. Defaults to `false`. */
+      visible?: boolean
+      /** maximum time to wait for in milliseconds. Defaults to `30000` (30 seconds). */
+      timeout?: number
+    }
+  ): Promise<void>
 }
 
 export class Request {

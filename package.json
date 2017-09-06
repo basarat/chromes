@@ -5,7 +5,9 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc -p .",
+    "preversion": "npm run build",
+    "postversion": "git push --follow-tags && npm publish"
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,7 @@
     "@types/node": "*"
   },
   "devDependencies": {
-    "@types/node": "8.0.26"
+    "@types/node": "8.0.26",
+    "typescript": "2.5.2"
   }
 }

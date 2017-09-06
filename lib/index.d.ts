@@ -893,8 +893,76 @@ export class ElementHandle {
   uploadFile(...filePaths: string[]): Promise<void>
 }
 
+/**
+ * Whenever the page sends a request, the following events are emitted by the page
+ * 
+ * 'request' emitted when the request is issued by the page.
+ * 'response' emitted when/if the response is received for the request.
+ * 'requestfinished' emitted when the response body is downloaded and the request is complete.
+ * 
+ * If request fails at some point, 
+ *  then instead of 'requestfinished' event (and possibly instead of 'response' event),
+ *  the ['requestfailed'](#event-requestfailed) event is emitted.
+ * 
+ * If request gets a 'redirect' response, 
+ *  the request is successfully finished with the 'requestfinished' event, 
+ *  and a new request is issued to a redirected url.
+ */
 export class Request {
-  /** TODO */
+  /**
+   * To use this, 
+   *  request interception should be enabled with `page.setRequestInterceptionEnabled`.
+   * Exception is immediately thrown if the request interception is not enabled.
+   * 
+   * Aborts request. 
+   */
+  abort(): void
+
+  /**
+   * To use this, 
+   *  request interception should be enabled with `page.setRequestInterceptionEnabled`.
+   * Exception is immediately thrown if the request interception is not enabled.
+   * 
+   * Continues request with optional request overrides.
+   * 
+   * @param overrides Optional request overwrites
+   */
+  continue(overrides?: {
+    /** If set, the request url will be changed */
+    url?: string,
+    /** If set changes the request method */
+    method?: 'GET' | 'POST' | 'PUT' | 'DELETE',
+    /** If set changes the post data of request */
+    postData?: string, 
+    /** If set changes the request HTTP headers */
+    header?: any,
+  }): void
+
+  /**
+   * An object with HTTP headers associated with the request. All header names are lower-case.
+   */
+  headers: any
+
+  /** Contains the request's method */
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE'
+
+  /** Contains the request's post body, if any. */
+  postData?: string
+
+  /**
+   * Contains the request's resource type as it was perceived by the rendering engine.
+   */
+  resourceType: 'Document' | 'Stylesheet' | 'Image' | 'Media' | 'Font' | 'Script' | 'TextTrack' | 'XHR' | 'Fetch' | 'EventSource' | 'WebSocket' | 'Manifest' | 'Other'
+
+  /**
+   * A matching [Response] object, or `null` if the response has not been received yet.
+   */
+  response(): Response | null
+
+  /**
+   * Contains the URL of the request.
+   */
+  url: string
 }
 
 /**

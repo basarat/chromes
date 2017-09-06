@@ -718,7 +718,83 @@ const page = await browser.newPage();
 ```
  */
 export class Frame {
-  /** TODO  */
+  /**
+   * The method queries frame for the selector. If there's no such element within the frame, the method will resolve to `null`.
+   */
+  $(selector: string): Promise<ElementHandle | null>
+
+  /**
+   * The method runs `document.querySelectorAll` within the frame. If no elements match the selector, the return value resolve to `[]`.
+   */
+  $$(selector: string): Promise<ElementHandle[]>
+
+  /**
+   * This method runs `document.querySelector` within the frame and passes it as the first argument to `pageFunction`. If there's no element matching `selector`, the method throws an error.
+
+If `pageFunction` returns a [Promise], then `frame.$eval` would wait for the promise to resolve and return it's value. 
+
+e.g 
+```js
+const html = await frame.$eval('.main-container', e => e.outerHTML);
+```
+   */
+  $eval<T>(selector: string, pageFunction: (el: Node) => T, ...args: any[]): Promise<T>
+
+  /** 
+   * Adds a `<script>` tag to the frame with the desired url. 
+   * Alternatively, JavaScript could be injected to the frame via `injectFile` method.
+   */
+  addScriptTag(url: string): Promise<void>
+
+  /** Helps get the frame tree */
+  childFrames(): Frame[];
+
+  /**
+   * If the function, passed to the `page.evaluate`, returns a Promise, 
+   * then `page.evaluate` would wait for the promise to resolve and return it's value.
+   * 
+   * @param pageFunction Function to be evaluated in browser context
+   * @returns Promise which resolves to function return value. 
+   */
+  evaluate<T>(pageFunction: () => T): Promise<T>
+  evaluate(code: string): Promise<any>
+
+  /**
+   * @param filePath Path to the JavaScript file to be injected into frame. 
+   * If `filePath` is a relative path, then it is resolved relative to cwd.
+   */
+  injectFile(filePath: string): Promise<void>
+
+  /**
+   * Returns `true` if the frame has been detached, or `false` otherwise.
+   */
+  isDetached(): boolean
+
+  /**
+   * Returns frame's name attribute as specified in the tag.
+   * If the name is empty, returns the id attribute instead.
+   * 
+   * This value is calculated once when the frame is created, 
+   *  and will not update if the attribute is changed later.
+   */
+  name(): string
+
+  /**
+   * Returns parent frame, if any. Detached frames and main frames return `null`
+   */
+  parentFrame(): Frame | null
+
+  /**
+   * Returns page's title.
+   */
+  title(): string
+
+  /**
+   * Returns frame's url.
+   */
+  url(): string
+
+  
 }
 
 export class Request {

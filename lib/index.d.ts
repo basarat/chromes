@@ -193,7 +193,7 @@ export class Page {
   /**
    * This method fetches an element with `selector`, 
    * scrolls it into view if needed, 
-   * and then uses [page.mouse](#pagemouse) to click in the center of the element.
+   * and then uses `page.mouse` to click in the center of the element.
    * If there's no element matching `selector`, the method throws an error.
    */
   click(selector: string, options?: ClickOptions): Promise<void>
@@ -840,11 +840,60 @@ const html = await frame.$eval('.main-container', e => e.outerHTML);
   ): Promise<void>
 }
 
-export class Request {
-  /** TODO */
+/** 
+ * ElementHandle represents an in-page DOM element. 
+ * ElementHandles could be created with the `page.$` method.
+ * 
+```js
+const inputElement = await page.$('input[type=submit]');
+await inputElement.click();
+```
+ * - ElementHandle prevents DOM element from garbage collection unless you call `dispose`
+ * - ElementHandles are always auto-disposed when their origin frame gets navigated.
+ */
+export class ElementHandle {
+  /**
+   * This method scrolls element into view if needed, 
+   * and then uses `page.mouse` to click in the center of the element.
+   * If the element is detached from DOM, the method throws an error.
+   */
+  click(options?: ClickOptions): Promise<void>
+
+  /**
+   * The method stops referencing the element handle opening it up for garbage collection
+   */
+  dispose(): Promise<void>
+
+  /**
+   * @param pageFunction Function to be evaluated in browser context
+   */
+  evaluate<T>(pageFunction: (e: Node) => T, ...args: any[]): Promise<T>
+
+  /**
+   * This method scrolls element into view if needed, 
+   * and then uses `page.mouse` to hover over the center of the element.
+   * If the element is detached from DOM, the method throws an error.
+   * 
+   * @returns Promise which resolves when the element is successfully hovered.
+   */
+  hover(): Promise<void>
+
+  /**
+   * This method scrolls element into view if needed, 
+   * and then uses `touchscreen.tap` to tap in the center of the element.
+   * If the element is detached from DOM, the method throws an error.
+   */
+  tap(): Promise<void>
+
+  /**
+   * This method expects `elementHandle` to point to an [input element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input).
+   * 
+   * @param filePaths Sets the value of the file input these paths. If some of the  `filePaths` are relative paths, then they are resolved relative to cwd.
+   */
+  uploadFile(...filePaths: string[]): Promise<void>
 }
 
-export class ElementHandle {
+export class Request {
   /** TODO */
 }
 

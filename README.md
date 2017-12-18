@@ -22,6 +22,7 @@ chs.launch().then(async ({browser, page}) => {
 ### FAQ 
 * `error while loading shared libraries: libXss.so.1`. Will not happen on any OS you use for dev. Sadly a common error in many (locked down) build servers. Solution is to run command specific to your OS. e.g. 
   * Fedora: `pkcon install libXScrnSaver` 
+  * Debian: `sudo apt-get install libxss1`
   * CentOS: `sudo yum install libXScrnSaver`
 
 ### Puppeter Docs 

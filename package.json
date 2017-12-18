@@ -28,6 +28,6 @@
   "devDependencies": {
     "@types/puppeteer": "0.13.8",
     "puppeteer": "0.13.0",
-    "typescript": "2.5.2"
+    "typescript": "2.6.2"
   }
 }

@@ -18,5 +18,5 @@ import * as chs from 'chromes';
   * Fedora: `pkcon install libXScrnSaver` 
   * CentOS: `sudo yum install libXScrnSaver`
 
-## Docs 
+### Puppeter Docs 
 * https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md

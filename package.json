@@ -20,12 +20,14 @@
     "url": "https://github.com/basarat/chromes/issues"
   },
   "homepage": "https://github.com/basarat/chromes#readme",
-  "dependencies": {
-    "puppeteer": "0.10.2",
-    "@types/node": "*"
+  "dependencies": {},
+  "peerDependencies": {
+    "puppeteer": "*",
+    "@types/puppeteer": "*"
   },
   "devDependencies": {
-    "@types/node": "8.0.26",
+    "@types/puppeteer": "0.13.8",
+    "puppeteer": "0.13.0",
     "typescript": "2.5.2"
   }
 }

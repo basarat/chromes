@@ -26,8 +26,8 @@
     "@types/puppeteer": "*"
   },
   "devDependencies": {
-    "@types/puppeteer": "0.13.8",
-    "puppeteer": "0.13.0",
-    "typescript": "2.6.2"
+    "@types/puppeteer": "1.12.4",
+    "puppeteer": "1.18.1",
+    "typescript": "3.5.3"
   }
 }

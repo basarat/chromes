@@ -1,4 +1,7 @@
 # Chromes
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/basarat/chromes.svg)](https://greenkeeper.io/)
+
 A simple and typesafe chrome automation library 🌹
 
 > Ships with TypeScript definitions ❤️
